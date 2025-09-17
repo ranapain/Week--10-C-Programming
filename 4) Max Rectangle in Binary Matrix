@@ -1,0 +1,31 @@
+#include <stdio.h>
+int maxRect(int*,int);
+int maximal(char m[][5],int R,int C){
+    int h[5]={0},max=0;
+    for(int i=0;i<R;i++){
+        for(int j=0;j<C;j++) h[j]= (m[i][j]=='1')?h[j]+1:0;
+        int a=maxRect(h,C); if(a>max) max=a;
+    }
+    return max;
+}
+int maxRect(int h[],int n){ // from #3
+    int st[100],top=-1,max=0;
+    for(int i=0;i<=n;i++){
+        int cur=(i==n?0:h[i]);
+        while(top>=0 && h[st[top]]>cur){
+            int ht=h[st[top--]];
+            int left=(top>=0?st[top]:-1);
+            int area=ht*(i-left-1);
+            if(area>max) max=area;
+        }
+        st[++top]=i;
+    }
+    return max;
+}
+int main(){
+    char m[4][5]={{'1','0','1','0','0'},
+                  {'1','0','1','1','1'},
+                  {'1','1','1','1','1'},
+                  {'1','0','0','1','0'}};
+    printf("%d\n",maximal(m,4,5)); //6
+}
