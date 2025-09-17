@@ -1,0 +1,19 @@
+#include <stdio.h>
+int maxRect(int h[],int n){
+    int st[100],top=-1,max=0;
+    for(int i=0;i<=n;i++){
+        int cur=(i==n?0:h[i]);
+        while(top>=0 && h[st[top]]>cur){
+            int ht=h[st[top--]];
+            int left=(top>=0?st[top]:-1);
+            int area=ht*(i-left-1);
+            if(area>max) max=area;
+        }
+        st[++top]=i;
+    }
+    return max;
+}
+int main(){
+    int a[]={2,1,5,6,2,3};
+    printf("%d\n",maxRect(a,6)); //10
+}
