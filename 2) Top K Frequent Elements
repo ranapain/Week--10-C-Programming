@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {int x,c;} P;
+int cmp(const void*a,const void*b){return ((P*)b)->c-((P*)a)->c;}
+
+int main(){
+    int a[]={1,1,1,2,2,3}, n=6, k=2;
+    P arr[10]; int m=0;
+    for(int i=0;i<n;i++){
+        int f=0; for(int j=0;j<m;j++) if(arr[j].x==a[i]){arr[j].c++; f=1;}
+        if(!f){ arr[m].x=a[i]; arr[m].c=1; m++; }
+    }
+    qsort(arr,m,sizeof(P),cmp);
+    for(int i=0;i<k;i++) printf("%d ",arr[i].x);
+}
